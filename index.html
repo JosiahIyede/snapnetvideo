@@ -3,19 +3,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Azure Video Uploader</title>
+  <title>Video Upload</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>Submit Your Video</h1>
-    <form id="upload-form">
-      <input type="file" id="video-file" accept=".mp4, .mov, .avi" required />
-      <button type="submit">Upload</button>
-      <p id="status"></p>
-    </form>
+    <h1>Upload Your Video</h1>
+    <input type="file" id="videoFile" accept=".mp4,.avi,.mov" />
+    <button onclick="uploadVideo()">Upload</button>
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <p id="statusText"></p>
   </div>
-  <script src="script.js"></script>
+  <script src="upload.js"></script>
 </body>
 </html>
