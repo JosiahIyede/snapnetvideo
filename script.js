@@ -4,15 +4,20 @@ async function uploadVideo() {
   const statusText = document.getElementById("statusText");
 
   if (!file) return (statusText.textContent = "Please select a file.");
-  if (!['video/mp4', 'video/avi', 'video/quicktime'].includes(file.type)) {
+
+  const allowedTypes = ["video/mp4", "video/avi", "video/quicktime"];
+  if (!allowedTypes.includes(file.type)) {
     return (statusText.textContent = "Allowed formats: .mp4, .avi, .mov");
   }
+
   if (file.size > 200 * 1024 * 1024) {
     return (statusText.textContent = "Max file size is 200MB.");
   }
 
   const blobName = encodeURIComponent(file.name);
-  const sasUrl = `https://hrvideos.blob.core.windows.net/vdeos/${blobName}?sv=2024-11-04&ss=b&srt=c&sp=rwdlacitfx&se=2025-07-31T04:02:07Z&st=2025-06-20T20:02:07Z&sip=0.0.0.0&spr=https&sig=Bwd1WU6cdsXqO2Opip1f3cs9GYJWSajBMv%2BuBl1lLp0%3D`;
+  const containerUrl = `https://hrvideos.blob.core.windows.net/vdeos/Videos/${blobName}`;
+  const sasToken = `sp=aw&st=2025-06-20T20:38:26Z&se=2025-07-31T04:38:26Z&sip=0.0.0.0&spr=https&sv=2024-11-04&sr=c&sig=vjDzHOCwrqWEc7vIL0kxz5ZdYNjb40B7ekJAZh96uaM%3D`;
+  const sasUrl = `${containerUrl}?${sasToken}`;
 
   const xhr = new XMLHttpRequest();
   xhr.open("PUT", sasUrl, true);
