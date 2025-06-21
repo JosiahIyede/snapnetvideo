@@ -4,37 +4,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Upload Your Video</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Video Upload</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <div class="upload-container">
+  <div class="container">
     <h1>Upload Your Video</h1>
-    <input type="file" id="videoFile" accept=".mp4, .avi, .mov" />
+    <input type="file" id="videoFile" accept=".mp4,.avi,.mov" />
     <button onclick="uploadVideo()">Upload</button>
-    <div class="progress">
-      <div id="progressBar" class="progress-bar">0%</div>
-    </div>
+    <div class="progress-bar"><div id="progressBar" class="progress-bar-fill"></div></div>
     <p id="statusText"></p>
+    <video id="videoPreview" controls style="display:none;"></video>
   </div>
-
   <script src="script.js"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Upload</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Upload Video</h1>
-        <input type="file" id="videoFile" accept="video/*">
-        <button onclick="uploadVideo()">Upload</button>
-        <div id="progressBar" class="progress-bar">
-            <div id="progressBarFill" class="progress-bar-fill"></div>
-        </div>
-        <p id="statusText"></p>
-        <video id="videoPreview" controls></video>
-    </div>
-    <script src="upload.js"></script>
 </body>
 </html>
