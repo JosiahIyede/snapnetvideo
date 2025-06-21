@@ -2,6 +2,7 @@ async function uploadVideo() {
   const file = document.getElementById("videoFile").files[0];
   const progressBar = document.getElementById("progressBar");
   const statusText = document.getElementById("statusText");
+  const videoPreview = document.getElementById("videoPreview");
 
   if (!file) return (statusText.textContent = "Please select a file.");
 
@@ -31,7 +32,13 @@ async function uploadVideo() {
   };
 
   xhr.onload = () => {
-    statusText.textContent = xhr.status === 201 ? "Upload successful!" : "Upload failed.";
+    if (xhr.status === 201) {
+      statusText.textContent = "Upload successful!";
+      videoPreview.src = sasUrl;
+      videoPreview.style.display = "block";
+    } else {
+      statusText.textContent = "Upload failed.";
+    }
   };
 
   xhr.onerror = () => {
