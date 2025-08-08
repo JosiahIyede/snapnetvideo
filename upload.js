@@ -1,11 +1,3 @@
-<input type="file" id="videoFile" />
-<div style="width: 100%; background: #eee;">
-  <div id="progressBar" style="width:0%; height: 20px; background: green;"></div>
-</div>
-<p id="statusText"></p>
-<video id="videoPreview" controls style="display:none; width:400px;"></video>
-
-<script>
 async function uploadVideo() {
   const file = document.getElementById("videoFile").files[0];
   const progressBar = document.getElementById("progressBar");
@@ -29,12 +21,13 @@ async function uploadVideo() {
   }
 
   // Your container SAS token from Azure
-  const sasToken = "sp=racw&st=2025-08-08T10:10:16Z&se=2025-10-31T18:25:16Z&spr=https&sv=2024-11-04&sr=c&sig=W7sAEFPHlLBDy%2FbdlsQnlUYiZNghuE6bw3wRfknDBpc%3D";
+  const sasToken =
+    "sp=racw&st=2025-08-08T10:10:16Z&se=2025-10-31T18:25:16Z&spr=https&sv=2024-11-04&sr=c&sig=W7sAEFPHlLBDy%2FbdlsQnlUYiZNghuE6bw3wRfknDBpc%3D";
 
   // Storage details
   const accountName = "hrvideos";
   const containerName = "snapnetsolutions";
-  const blobName = encodeURIComponent(file.name); // avoid spaces/special chars
+  const blobName = encodeURIComponent(file.name);
 
   // Build the full blob URL
   const uploadUrl = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}?${sasToken}`;
@@ -54,7 +47,7 @@ async function uploadVideo() {
   xhr.onload = () => {
     if (xhr.status === 201) {
       statusText.textContent = "✅ Upload successful!";
-      videoPreview.src = blobUrl; // no SAS needed if container is public
+      videoPreview.src = blobUrl;
       videoPreview.style.display = "block";
     } else {
       statusText.textContent = `❌ Upload failed (Status ${xhr.status}). Check your SAS token validity.`;
@@ -68,4 +61,3 @@ async function uploadVideo() {
   statusText.textContent = "⏳ Uploading...";
   xhr.send(file);
 }
-</script>
