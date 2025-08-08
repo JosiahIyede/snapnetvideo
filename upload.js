@@ -16,8 +16,9 @@ async function uploadVideo() {
   }
 
   const blobName = encodeURIComponent(file.name);
-  const sasToken = "sp=racw&st=2025-08-08T10:10:16Z&se=2025-10-31T18:25:16Z&spr=https&sv=2024-11-04&sr=c&sig=W7sAEFPHlLBDy%2FbdlsQnlUYiZNghuE6bw3wRfknDBpc%3D";
-  const uploadUrl = `https://hrvideos.blob.core.windows.net/snapnetsolutions/${blobName}?${sasToken}`;
+const sasToken = "sp=racw&st=2025-08-08T10:10:16Z&se=2025-10-31T18:25:16Z&spr=https&sv=2024-11-04&sr=c&sig=W7sAEFPHlLBDy%2FbdlsQnlUYiZNghuE6bw3wRfknDBpc%3D";
+const uploadUrl = `https://hrvideos.blob.core.windows.net/snapnetsolutions/${blobName}?${sasToken}`;
+
 
   const xhr = new XMLHttpRequest();
   xhr.open("PUT", uploadUrl, true);
