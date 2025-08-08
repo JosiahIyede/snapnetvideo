@@ -1,24 +1,44 @@
+<input type="file" id="videoFile" />
+<div style="width: 100%; background: #eee;">
+  <div id="progressBar" style="width:0%; height: 20px; background: green;"></div>
+</div>
+<p id="statusText"></p>
+<video id="videoPreview" controls style="display:none; width:400px;"></video>
+
+<script>
 async function uploadVideo() {
   const file = document.getElementById("videoFile").files[0];
   const progressBar = document.getElementById("progressBar");
   const statusText = document.getElementById("statusText");
   const videoPreview = document.getElementById("videoPreview");
 
-  if (!file) return (statusText.textContent = "Please select a file.");
+  if (!file) {
+    statusText.textContent = "Please select a file.";
+    return;
+  }
 
   const allowedTypes = ["video/mp4", "video/avi", "video/quicktime"];
   if (!allowedTypes.includes(file.type)) {
-    return (statusText.textContent = "Allowed formats: .mp4, .avi, .mov");
+    statusText.textContent = "Allowed formats: .mp4, .avi, .mov";
+    return;
   }
 
   if (file.size > 500 * 1024 * 1024) {
-    return (statusText.textContent = "Max file size is 500MB.");
+    statusText.textContent = "Max file size is 500MB.";
+    return;
   }
 
-  const blobName = encodeURIComponent(file.name);
-const sasToken = "sp=racw&st=2025-08-08T10:10:16Z&se=2025-10-31T18:25:16Z&spr=https&sv=2024-11-04&sr=c&sig=W7sAEFPHlLBDy%2FbdlsQnlUYiZNghuE6bw3wRfknDBpc%3D";
-const uploadUrl = `https://hrvideos.blob.core.windows.net/snapnetsolutions/${blobName}?${sasToken}`;
+  // Your container SAS token from Azure
+  const sasToken = "sp=racw&st=2025-08-08T10:10:16Z&se=2025-10-31T18:25:16Z&spr=https&sv=2024-11-04&sr=c&sig=W7sAEFPHlLBDy%2FbdlsQnlUYiZNghuE6bw3wRfknDBpc%3D";
 
+  // Storage details
+  const accountName = "hrvideos";
+  const containerName = "snapnetsolutions";
+  const blobName = encodeURIComponent(file.name); // avoid spaces/special chars
+
+  // Build the full blob URL
+  const uploadUrl = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}?${sasToken}`;
+  const blobUrl = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
 
   const xhr = new XMLHttpRequest();
   xhr.open("PUT", uploadUrl, true);
@@ -27,17 +47,17 @@ const uploadUrl = `https://hrvideos.blob.core.windows.net/snapnetsolutions/${blo
   xhr.upload.onprogress = (e) => {
     if (e.lengthComputable) {
       const percent = (e.loaded / e.total) * 100;
-      progressBar.style.width = percent + "%";
+      progressBar.style.width = percent.toFixed(2) + "%";
     }
   };
 
   xhr.onload = () => {
     if (xhr.status === 201) {
       statusText.textContent = "✅ Upload successful!";
-      videoPreview.src = uploadUrl.split("?")[0];
+      videoPreview.src = blobUrl; // no SAS needed if container is public
       videoPreview.style.display = "block";
     } else {
-      statusText.textContent = "❌ Upload failed. Check your SAS token.";
+      statusText.textContent = `❌ Upload failed (Status ${xhr.status}). Check your SAS token validity.`;
     }
   };
 
@@ -45,5 +65,7 @@ const uploadUrl = `https://hrvideos.blob.core.windows.net/snapnetsolutions/${blo
     statusText.textContent = "❌ Network or server error during upload.";
   };
 
+  statusText.textContent = "⏳ Uploading...";
   xhr.send(file);
 }
+</script>
