@@ -22,7 +22,7 @@ async function uploadVideo() {
 
   // Your container SAS token from Azure
   const sasToken =
-    "sp=racw&st=2025-08-08T10:10:16Z&se=2025-10-31T18:25:16Z&spr=https&sv=2024-11-04&sr=c&sig=W7sAEFPHlLBDy%2FbdlsQnlUYiZNghuE6bw3wRfknDBpc%3D";
+    "sv=2024-11-04&ss=bfqt&srt=co&sp=rwdlacupiytfx&se=2025-11-30T19:02:00Z&st=2025-08-08T10:47:00Z&spr=https&sig=gH93F7hLbPizfP9t0uc0k%2BMuyLTO9oOPIDQUqg0QB%2Bo%3D";
 
   // Storage details
   const accountName = "hrvideos";
