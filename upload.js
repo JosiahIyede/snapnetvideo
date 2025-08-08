@@ -22,7 +22,7 @@ async function uploadVideo() {
 
   // Your container SAS token from Azure
   const sasToken =
-    "sv=2024-11-04&ss=bfqt&srt=co&sp=rwdlacupiytfx&se=2025-11-30T19:02:00Z&st=2025-08-08T10:47:00Z&spr=https&sig=gH93F7hLbPizfP9t0uc0k%2BMuyLTO9oOPIDQUqg0QB%2Bo%3D";
+    "sp=racw&st=2025-08-08T11:14:35Z&se=2025-09-30T19:29:35Z&spr=https&sv=2024-11-04&sr=c&sig=IHmFcW63LmbKcTF4HukmO8ME9yBQJFd7Revf%2BB%2BVgp4%3D";
 
   // Storage details
   const accountName = "hrvideos";
@@ -31,7 +31,7 @@ async function uploadVideo() {
 
   // Build the full blob URL
   const uploadUrl = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}?${sasToken}`;
-  const blobUrl = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
+  const blobUrl = `https://hrvideos.blob.core.windows.net/snapnetsolutions?sp=racw&st=2025-08-08T11:14:35Z&se=2025-09-30T19:29:35Z&spr=https&sv=2024-11-04&sr=c&sig=IHmFcW63LmbKcTF4HukmO8ME9yBQJFd7Revf%2BB%2BVgp4%3D`;
 
   const xhr = new XMLHttpRequest();
   xhr.open("PUT", uploadUrl, true);
